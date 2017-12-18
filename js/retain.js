@@ -24,7 +24,9 @@ $(function(){
         //like a HUB between them
         addNewNote: function(noteStr) {
             model.add({
-                content: noteStr
+                //pass an object as variable to model
+                content: noteStr,
+                timestamp: new Date().toLocaleString()
             });
             view.render();
         },
@@ -60,9 +62,10 @@ $(function(){
         },
         render: function(){
             var htmlStr = '';
+            //note is passed to the function by forEach.
             octopus.getNotes().forEach(function(note){
                 htmlStr += '<li class="note">'+
-                        note.content +
+                        note.content + ', ' + note.timestamp +
                     '</li>';
             });
             this.noteList.html( htmlStr );

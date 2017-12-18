@@ -1,6 +1,8 @@
 $(function(){
 
     var model = {
+        //only deals with data, not views
+        //no "view.xx()" here
         init: function() {
             if (!localStorage.notes) {
                 localStorage.notes = JSON.stringify([]);
@@ -18,6 +20,8 @@ $(function(){
 
 
     var octopus = {
+        //controller handles methods of model and view 
+        //like a HUB between them
         addNewNote: function(noteStr) {
             model.add({
                 content: noteStr
@@ -37,10 +41,16 @@ $(function(){
 
 
     var view = {
+        //no "model.xx()" here.
+        //view functions call controller methods,
+        //controller then calls model methods 
+        //never directly communicate with model
         init: function() {
+            //grab data from dom
             this.noteList = $('#notes');
             var newNoteForm = $('#new-note-form');
             var newNoteContent = $('#new-note-content');
+            //add event listeners to dom objects
             newNoteForm.submit(function(e){
                 octopus.addNewNote(newNoteContent.val());
                 newNoteContent.val('');
